@@ -1,0 +1,7 @@
+#以下是忽略文件
+.cdk/
+Lst/
+Obj/
+utilities/
+*.txt
+*.bat
