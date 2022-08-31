@@ -21,7 +21,7 @@
 #include "watchdog.h"
 
 
-#define DEF_DTM_EXT_API_TEST_MODE   (1)
+#define DEF_DTM_EXT_API_TEST_MODE   (0)
 
 /*********************************************************************
     LOCAL FUNCTION PROTOTYPES

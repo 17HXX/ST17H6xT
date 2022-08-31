@@ -55,3 +55,16 @@ void my_dump_byte(uint8_t* pData, int dlen)
 }
 
 
+void my_dump_word(uint8_t* pData, int dlen)
+{
+    for(int i=0; i<dlen; i++)
+    {
+        dbg_printf("%02X",pData[i]);
+		if(i>0&&(i+1)%4==0)
+		    dbg_printf(":");
+		if(i>0&&(i+1)%16==0)
+		    dbg_printf("\n");
+    }
+
+    dbg_printf("\n");
+}

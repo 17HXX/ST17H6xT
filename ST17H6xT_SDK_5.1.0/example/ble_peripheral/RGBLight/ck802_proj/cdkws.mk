@@ -6,7 +6,7 @@ Project_Title:
 	@echo "----------Building project:[ RGBLight - BuildSet ]----------"
 
 Project_Build:
-	@make -r -f RGBLight.mk -j 12 -C  ./ 
+	@make -r -f RGBLight.mk -j 16 -C  ./ 
 
 
 clean:

@@ -69,7 +69,7 @@ uint8	LC_IIC_Wait_Ack(void)
 	while(SDA_READ() == 1)
 	{
 		errTime++;
-		if(errTime > 255)
+		if(errTime > 250)
 		{
 			LC_IIC_Stop();
 			return	1;

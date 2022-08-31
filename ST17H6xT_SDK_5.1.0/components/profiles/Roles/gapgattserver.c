@@ -65,7 +65,7 @@ static CONST gattAttrType_t gapService = { ATT_BT_UUID_SIZE, gapServiceUUID };
 static uint8 deviceNameCharProps = GATT_PROP_READ;
 
 // Device Name attribute (0 - 248 octets) - extra octet for null-terminate char
-static uint8 deviceName[GAP_DEVICE_NAME_LEN+1] = { 0 };
+static char deviceName[GAP_DEVICE_NAME_LEN+1] = { 0 };
 
 // Appearance Characteristic Properties
 static uint8 appearanceCharProps = GATT_PROP_READ;
@@ -102,7 +102,7 @@ static gattAttribute_t gapAttrTbl[] =
         { ATT_BT_UUID_SIZE, deviceNameUUID },
         GATT_PERMIT_READ,
         0,
-        deviceName
+        (uint8 *)deviceName
       },
 
     // Characteristic Declaration
@@ -172,6 +172,20 @@ bStatus_t GGS_AddService(    )
 	return ( status );
 }
 
+bStatus_t GGS_SetDeviceName(     uint8 *pValue, uint8 Len)
+{
+	uint8 status = SUCCESS;
+
+	if(Len>21)
+		return bleInvalidRange;
+
+	VOID osal_memset( deviceName, 0, GAP_DEVICE_NAME_LEN+1 );
+    VOID osal_memcpy( deviceName, pValue, Len );
+	
+	return ( status );
+}
+
+
 /*********************************************************************
  * @fn      GGS_RegisterAppCBs
  *
@@ -227,6 +241,7 @@ static uint8 ggs_ReadAttrCB( uint16 connHandle, gattAttribute_t *pAttr,
     {
       case DEVICE_NAME_UUID:
         {	
+#if 0        
         	uint8 attDeviceName[] = "JACK V0.1:000000000000";
 			uint8 publicAddr[B_ADDR_LEN];
 			uint8 AddrStr[B_ADDR_LEN*2];
@@ -249,11 +264,15 @@ static uint8 ggs_ReadAttrCB( uint16 connHandle, gattAttribute_t *pAttr,
 				}
 			}
 			osal_memcpy(&attDeviceName[10],AddrStr,(B_ADDR_LEN<<1) );
-			
-		  uint8 len = sizeof(attDeviceName);		  
+#endif			
+		  uint8 len = osal_strlen(deviceName);	
+          if(len>maxLen)
+          {
+		  	len=maxLen;
+          }
 
           *pLen = len;
-          VOID osal_memcpy( pValue, attDeviceName, len );
+          VOID osal_memcpy( pValue, (char*)deviceName, len );
         }
         break;
 

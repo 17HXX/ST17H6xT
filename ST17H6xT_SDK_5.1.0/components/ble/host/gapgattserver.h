@@ -30,7 +30,7 @@ extern "C"
  * CONSTANTS
  */
 
-#define GAP_DEVICE_NAME_LEN                     (5+1)
+#define GAP_DEVICE_NAME_LEN                     (20+1)
 
 // Privacy Flag States
 #define GAP_PRIVACY_DISABLED                    0x00
@@ -125,6 +125,18 @@ extern bStatus_t GGS_GetParameter( uint8 param, void *value );
  *          bleMemAllocError: Memory allocation error occurred.<BR>
  */
 extern bStatus_t GGS_AddService( );
+
+/**
+ * @brief   Add function for the GAP GATT Service.
+ *
+ * @param   pValue -  name string
+ *           Len   -  Lenght of name
+ *
+ * @return  SUCCESS: attName added successfully.<BR>
+ *          bleInvalidRange: Invalid attName field.<BR>
+ */
+
+extern bStatus_t GGS_SetDeviceName(     uint8 *pValue, uint8 Len);
 
 /**
  * @brief   Registers the application callback function.

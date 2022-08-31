@@ -133,6 +133,16 @@ BareMetal: Without RTOS</Description>
       <FileOption/>
     </File>
   </VirtualDirectory>
+  <DebugSessions>
+    <watchExpressions>g_maxConnNum:1;g_pConnectionBuffer:1;pConnContext:1;(uint8 *)&amp;(connPtr-&gt;ll_buf.tx_ntrm_pkts[i]-&gt;header):1;pkt0:1;pkt1:1</watchExpressions>
+    <memoryExpressions>0x1fff00e2;0x40030000;0x1fff0000;0x40031074</memoryExpressions>
+    <statistics>;;MHZ;</statistics>
+    <peripheralTabs/>
+    <WatchDisplayFormat>1</WatchDisplayFormat>
+    <LocalDisplayFormat>0</LocalDisplayFormat>
+    <debugLayout/>
+    <memoryTabColSizeExpressions>72:4;72:4;48:8;100:8;</memoryTabColSizeExpressions>
+  </DebugSessions>
   <BuildConfigs>
     <BuildConfig Name="BuildSet">
       <Target>
@@ -330,14 +340,4 @@ BareMetal: Without RTOS</Description>
       </Flash>
     </BuildConfig>
   </BuildConfigs>
-  <DebugSessions>
-    <watchExpressions>g_maxConnNum:1;g_pConnectionBuffer:1;pConnContext:1;(uint8 *)&amp;(connPtr-&gt;ll_buf.tx_ntrm_pkts[i]-&gt;header):1;pkt0:1;pkt1:1</watchExpressions>
-    <memoryExpressions>0x1fff00e2;0x40030000;0x1fff0000;0x40031074</memoryExpressions>
-    <statistics>;;MHZ;</statistics>
-    <peripheralTabs/>
-    <WatchDisplayFormat>1</WatchDisplayFormat>
-    <LocalDisplayFormat>0</LocalDisplayFormat>
-    <debugLayout/>
-    <memoryTabColSizeExpressions>72:4;72:4;48:8;100:8;</memoryTabColSizeExpressions>
-  </DebugSessions>
 </Project>

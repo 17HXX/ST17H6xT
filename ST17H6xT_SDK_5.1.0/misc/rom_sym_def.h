@@ -22,6 +22,7 @@
 #define ATT_ReadByGrpTypeRsp _symrom_ATT_ReadByGrpTypeRsp
 #define ATT_ReadByTypeRsp _symrom_ATT_ReadByTypeRsp
 #define ATT_ReadMultiRsp _symrom_ATT_ReadMultiRsp
+#define ATT_SetMTUSizeMax _symrom_ATT_SetMTUSizeMax
 #define ATT_ReadRsp _symrom_ATT_ReadRsp
 #define ATT_WriteRsp _symrom_ATT_WriteRsp
 #define ble_main _symrom_ble_main

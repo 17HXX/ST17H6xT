@@ -178,6 +178,8 @@ static void hal_init(void)
     gpio_init();
 }
 
+__attribute__ ((aligned(4))) uint8_t bt_addr[6]={0x01,0x02,0x03,0x88,0x56,0x62};
+extern void ll_set_ble_mac_addr(uint32_t macAddr);
 int  main(void)  
 {     
 	//ble memory init and config
@@ -190,7 +192,7 @@ int  main(void)
     init_config();
     hal_rfphy_init();
     hal_init();
-
+    ll_set_ble_mac_addr((uint32)&bt_addr);
     if(gpio_read(P20)==1)
 	{
         //rf_phy_direct_test();

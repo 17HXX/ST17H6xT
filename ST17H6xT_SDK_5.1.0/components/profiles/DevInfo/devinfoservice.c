@@ -108,7 +108,7 @@ static gattAttribute_t devInfoAttrTbl[] =
 	// PnP ID Value
 	{
 		{ ATT_BT_UUID_SIZE, devInfoPnpIdUUID },
-		GATT_PERMIT_ENCRYPT_READ,
+		GATT_PERMIT_READ,
 		0,
 		(uint8 *) devInfoPnpId
 	}

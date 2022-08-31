@@ -33,10 +33,10 @@
 /*********************************************************************
  * MACROS
  */ 
-#define GAP_BOND_DEFAULT_PAIRING_MODE	GAPBOND_PAIRING_MODE_INITIATE
+#define GAP_BOND_DEFAULT_PAIRING_MODE	GAPBOND_PAIRING_MODE_WAIT_FOR_REQ
 
 #define GAP_BOND_DEFAULT_BONDING		SM_AUTH_STATE_BONDING
-#define GAP_BOND_DEFAULT_MITM			TRUE
+#define GAP_BOND_DEFAULT_MITM			FALSE//TRUE
 #if(defined(GAP_BOND_DEFAULT_MITM) && GAP_BOND_DEFAULT_MITM )
 #define GAP_BOND_DEFAULT_SLAVE_SECREQ	(GAP_BOND_DEFAULT_BONDING | SM_AUTH_STATE_AUTHENTICATED )
 #else
@@ -47,6 +47,9 @@
 
 #define GAP_BOND_DEFAULT_IO_CAP					GAPBOND_IO_CAP_NO_INPUT_NO_OUTPUT
 #define GAP_BOND_DEFAULT_OOB_ENABLE				FALSE
+
+static const gapBondCBs_t* pGapBondCB = NULL;
+
 
 /*********************************************************************
  * CONSTANTS
@@ -91,24 +94,33 @@ void gapBondMgrAuthenticate( uint16 connHandle, uint8 addrType,
  *
  * Public function defined in gapbondmgr.h.
  */
+#if 0 
 bStatus_t GAPBondMgr_LinkEst( uint16 connHandle, uint8 role )
 {
-    /*
-        initial linkItem->pEncParams 
-    */
+	if ( role == GAP_PROFILE_PERIPHERAL &&
+			GAP_BOND_DEFAULT_PAIRING_MODE == GAPBOND_PAIRING_MODE_INITIATE )
+	{
+		GAP_SendSlaveSecurityRequest( connHandle, GAP_BOND_DEFAULT_SLAVE_SECREQ );
+	}
+  return ( SUCCESS );
+}
+#else
+bStatus_t GAPBondMgr_LinkEst( uint16 connHandle, uint8 role )
+{
     smSecurityInfo_t ltk;
     ltk.keySize=16;
-    bStatus_t ret = GAP_Bond( connHandle,FALSE,&ltk, FALSE );
-    LOG("GAPBondMgr_LinkEst ret=%d\n",ret);
-
-    if ( role == GAP_PROFILE_PERIPHERAL &&
-    		GAP_BOND_DEFAULT_PAIRING_MODE == GAPBOND_PAIRING_MODE_INITIATE )
-    {
-    	GAP_SendSlaveSecurityRequest( connHandle, GAP_BOND_DEFAULT_SLAVE_SECREQ );
-    }
-    return ( SUCCESS );
+	extern bStatus_t GAP_Bond( uint16 connectionHandle, uint8 authenticated,
+                    smSecurityInfo_t *pParams, uint8 startEncryption );
+	GAP_Bond( connHandle,FALSE,&ltk, FALSE );
+    
+  if ( role == GAP_PROFILE_PERIPHERAL &&
+      GAP_BOND_DEFAULT_PAIRING_MODE == GAPBOND_PAIRING_MODE_INITIATE )
+  {
+    GAP_SendSlaveSecurityRequest( connHandle, GAP_BOND_DEFAULT_SLAVE_SECREQ );
+  }
+  return ( SUCCESS );
 }
-
+#endif
 /*********************************************************************
  * @brief   Register callback functions with the bond manager.
  *
@@ -116,6 +128,7 @@ bStatus_t GAPBondMgr_LinkEst( uint16 connHandle, uint8 role )
  */
 void GAPBondMgr_Register( gapBondCBs_t *pCB )
 {
+   pGapBondCB = pCB;
   // Take over the processing of Authentication messages
   GAP_SetParamValue( TGAP_AUTH_TASK_ID, gapBondMgr_TaskID );
 
@@ -142,7 +155,14 @@ uint8 GAPBondMgr_ProcessGAPMsg( gapEventHdr_t *pMsg )
 			#ifdef _PHY_DEBUG 
 				LOG("	GAP_PASSKEY_NEEDED_EVENT\n");
 			#endif
+			
+			
 			gapPasskeyNeededEvent_t *pPkt = (gapPasskeyNeededEvent_t *)pMsg;
+			if ( pGapBondCB && pGapBondCB->passcodeCB )
+			{
+			// Ask app for a passcode
+			  pGapBondCB->passcodeCB( pPkt->deviceAddr, pPkt->connectionHandle, pPkt->uiInputs, pPkt->uiOutputs );
+			}
 			if ( GAP_PasscodeUpdate( GAP_BOND_DEFAULT_PASSCODE, pPkt->connectionHandle ) != SUCCESS )
 			{
 				GAP_TerminateAuth( pPkt->connectionHandle, SMP_PAIRING_FAILED_PASSKEY_ENTRY_FAILED );
@@ -155,6 +175,12 @@ uint8 GAPBondMgr_ProcessGAPMsg( gapEventHdr_t *pMsg )
 			#ifdef _PHY_DEBUG 
 				LOG("	GAP_AUTHENTICATION_COMPLETE_EVENT\n");
 			#endif
+			gapAuthCompleteEvent_t* pPkt = (gapAuthCompleteEvent_t*)pMsg;
+			  // Call app state callback in the fail case. Success is handled after GAP_BOND_SAVE_REC_EVT.
+	        if ( pGapBondCB && pGapBondCB->pairStateCB )
+	        {
+	            pGapBondCB->pairStateCB( pPkt->connectionHandle, GAPBOND_PAIRING_STATE_COMPLETE, pPkt->hdr.status );
+	        }
 		}
 		break;
 
@@ -167,6 +193,11 @@ uint8 GAPBondMgr_ProcessGAPMsg( gapEventHdr_t *pMsg )
 			#ifdef _PHY_DEBUG 
 				LOG("	GAP_BOND_COMPLETE_EVENT\n");
 			#endif
+			gapBondCompleteEvent_t* pPkt = (gapBondCompleteEvent_t*)pMsg;
+			if ( pGapBondCB && pGapBondCB->pairStateCB )
+			{
+			  pGapBondCB->pairStateCB( pPkt->connectionHandle, GAPBOND_PAIRING_STATE_BONDED, pMsg->hdr.status );
+			}
 		}
 		break;
 
@@ -189,6 +220,12 @@ uint8 GAPBondMgr_ProcessGAPMsg( gapEventHdr_t *pMsg )
 
 				// Send pairing response
 				gapBondMgrAuthenticate( pPkt->connectionHandle, pLinkItem->addrType, &(pPkt->pairReq) );
+
+				            // Call app state callback
+            if ( pGapBondCB && pGapBondCB->pairStateCB )
+            {
+                pGapBondCB->pairStateCB( pPkt->connectionHandle, GAPBOND_PAIRING_STATE_STARTED, SUCCESS );
+            }
 			}
 		}
 		break;
