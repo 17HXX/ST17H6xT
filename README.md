@@ -2,7 +2,7 @@
 
 ## 开发环境
 
-- 链接：https://pan.baidu.com/s/1b4Lf-2QDQkE-37kdWkdRYw 提取码：0zsz
+- 链接：https://pan.baidu.com/s/1ZAOcR5RTl-4N_j9FSeFyXA 提取码：gtud
 
 ## 快速上手指南
 

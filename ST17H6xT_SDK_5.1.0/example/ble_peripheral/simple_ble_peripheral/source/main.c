@@ -260,6 +260,17 @@ int  main(void)
     init_config();
     hal_rfphy_init();
     hal_init();
+
+	uint8 m_compare[6]	=	{0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
+	uint8 m_buf[6];
+	otp_read_data_byte(0x1fff80c0,&m_buf[0],4,OTP_USER_READ_MODE);
+	otp_read_data_byte(0x1fff80c4,&m_buf[4],2,OTP_USER_READ_MODE);
+	LOG_DUMP_BYTE(m_buf, 6);
+	if(osal_memcmp(m_buf, m_compare, 6) == FALSE)
+	{
+		osal_memcpy(bt_addr,m_buf,6);
+	}
+	ll_set_ble_mac_addr(&bt_addr);
  
     if(gpio_read(P20)==1)
 	{

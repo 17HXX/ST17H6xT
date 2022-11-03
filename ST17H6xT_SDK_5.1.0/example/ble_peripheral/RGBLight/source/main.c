@@ -197,11 +197,21 @@ int  main(void)
     hal_rfphy_init();
     hal_init();
 
+	uint8 m_compare[6]	=	{0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
+	uint8 m_buf[6];
+	otp_read_data_byte(0x1fff80c0,&m_buf[0],4,OTP_USER_READ_MODE);
+	otp_read_data_byte(0x1fff80c4,&m_buf[4],2,OTP_USER_READ_MODE);
+	LOG_DUMP_BYTE(m_buf, 6);
+	if(osal_memcmp(m_buf, m_compare, 6) == FALSE)
+	{
+		osal_memcpy(bt_addr,m_buf,6);
+	}
+	ll_set_ble_mac_addr(&bt_addr);
+
     if(gpio_read(P20)==1)
 	{
         //rf_phy_direct_test();
 	}
-	ll_set_ble_mac_addr(&bt_addr);
     LOG("SDK Version ID %08x \n",SDK_VER_RELEASE_ID);
     LOG("rfClk %d rcClk %d sysClk %d tpCap[%02x %02x]\n",g_rfPhyClkSel,g_clk32K_config,g_system_clk,g_rfPhyTpCal0,g_rfPhyTpCal1);
     LOG("sizeof(struct ll_pkt_desc) = %d, buf size = %d\n", sizeof(struct ll_pkt_desc), BLE_CONN_BUF_SIZE);
