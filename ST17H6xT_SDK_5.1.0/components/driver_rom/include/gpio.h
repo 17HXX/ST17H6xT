@@ -131,8 +131,8 @@ typedef enum{
 typedef enum
 {
     GPIO_FLOATING   = 0x00, FLOATING = 0x00,       //no pull
-    GPIO_PULL_UP    = 0x01, WEAK_PULL_UP = 0x01,   //1M
-    GPIO_PULL_UP_S  = 0x02, STRONG_PULL_UP = 0x02, //10K
+    GPIO_PULL_UP    = 0x02, WEAK_PULL_UP = 0x02,   //1M
+    GPIO_PULL_UP_S  = 0x01, STRONG_PULL_UP = 0x01, //10K
     GPIO_PULL_DOWN  = 0x03, PULL_DOWN = 0x03,      //150K
 } gpio_pupd_e;
 	

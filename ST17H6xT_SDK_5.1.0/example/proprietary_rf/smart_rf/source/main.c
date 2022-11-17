@@ -117,7 +117,10 @@ static void hal_rfphy_init(void)
     //ble memory init and config
     ble_mem_init_config();
 }
-
+static void hal_gpio_IRQ(void)
+{
+	_symrom_GPIO_IRQHandler();
+}
 static void hal_init(void)
 {
     hal_low_power_io_init();
@@ -130,6 +133,7 @@ static void hal_init(void)
         add opt and flash init 
     */
     LOG_INIT();
+	JUMP_FUNCTION_SET(GPIO_IRQ_HANDLER,(uint32_t)&hal_gpio_IRQ);
     gpio_init();
 }
 
