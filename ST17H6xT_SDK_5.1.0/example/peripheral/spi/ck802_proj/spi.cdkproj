@@ -288,4 +288,7 @@ BareMetal: Without RTOS</Description>
     <debugLayout/>
     <memoryTabColSizeExpressions>72:4;72:4;48:8;100:8;</memoryTabColSizeExpressions>
   </DebugSessions>
+  <VendorInfo>
+    <VendorName>NULL</VendorName>
+  </VendorInfo>
 </Project>

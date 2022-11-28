@@ -6,7 +6,7 @@ Project_Title:
 	@echo "----------Building project:[ gpio - BuildSet ]----------"
 
 Project_Build:
-	@make -r -f gpio.mk -j 12 -C  ./ 
+	@make -r -f gpio.mk -j 16 -C  ./ 
 
 
 clean:

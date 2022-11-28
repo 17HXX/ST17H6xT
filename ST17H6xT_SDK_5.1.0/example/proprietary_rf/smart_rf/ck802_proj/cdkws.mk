@@ -6,7 +6,7 @@ Project_Title:
 	@echo "----------Building project:[ smart_rf - BuildSet ]----------"
 
 Project_Build:
-	@make -r -f smart_rf.mk -j 12 -C  ./ 
+	@make -r -f smart_rf.mk -j 16 -C  ./ 
 
 
 clean:

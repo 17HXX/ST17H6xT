@@ -276,4 +276,7 @@ BareMetal: Without RTOS</Description>
       </Flash>
     </BuildConfig>
   </BuildConfigs>
+  <VendorInfo>
+    <VendorName>NULL</VendorName>
+  </VendorInfo>
 </Project>

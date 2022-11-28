@@ -335,6 +335,8 @@
 #define hal_timer_init 				_symrom_hal_timer_init
 #define hal_timer_deinit 			_symrom_hal_timer_deinit
 
+#define	otp_read_data_byte		_symrom_otp_read_data_byte
+
 #define pwrmgr_lock        _symrom_pwrmgr_lock
 #define pwrmgr_unlock      _symrom_pwrmgr_unlock
 #define enter_sleep_off_mode _symrom_enter_sleep_off_mode

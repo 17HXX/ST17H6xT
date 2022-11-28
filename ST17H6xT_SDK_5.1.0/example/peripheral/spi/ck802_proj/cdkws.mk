@@ -6,7 +6,7 @@ Project_Title:
 	@echo "----------Building project:[ spi - BuildSet ]----------"
 
 Project_Build:
-	@make -r -f spi.mk -j 12 -C  ./ 
+	@make -r -f spi.mk -j 16 -C  ./ 
 
 
 clean:

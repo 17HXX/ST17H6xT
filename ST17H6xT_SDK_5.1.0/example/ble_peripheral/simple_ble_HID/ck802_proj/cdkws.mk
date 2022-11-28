@@ -6,7 +6,7 @@ Project_Title:
 	@echo "----------Building project:[ HID - BuildSet ]----------"
 
 Project_Build:
-	@make -r -f HID.mk -j 12 -C  ./ 
+	@make -r -f HID.mk -j 16 -C  ./ 
 
 
 clean:
