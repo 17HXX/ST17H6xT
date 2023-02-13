@@ -163,10 +163,7 @@ static void hal_rfphy_init(void)
     NVIC_SetPriority((IRQn_Type)TIM2_IRQn,  IRQ_PRIO_HIGH);     //OSAL_TICK
     
 }
-static void hal_gpio_IRQ(void)
-{
-	_symrom_GPIO_IRQHandler();
-}
+
 static void hal_init(void)
 {
     hal_low_power_io_init();
@@ -180,7 +177,7 @@ static void hal_init(void)
 	extern int hal_otp_flash_init(void);
     hal_otp_flash_init();
     LOG_INIT();
-	JUMP_FUNCTION_SET(GPIO_IRQ_HANDLER,(uint32_t)&hal_gpio_IRQ);
+
     gpio_init();
 }
 

@@ -5,3 +5,4 @@ Obj/
 utilities/
 *.txt
 *.bat
+.cache/

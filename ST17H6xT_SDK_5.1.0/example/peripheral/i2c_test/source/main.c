@@ -160,10 +160,6 @@ static void hal_rfphy_init(void)
 }
 
 
-void hal_gpio_IRQ(void)
-{
-	_symrom_GPIO_IRQHandler();
-}
 
 static void hal_init(void)
 {
@@ -179,7 +175,7 @@ static void hal_init(void)
     */
     LOG_INIT();
     //gpio_init();
-	JUMP_FUNCTION_SET(GPIO_IRQ_HANDLER,(uint32_t)&hal_gpio_IRQ);
+
 	ret = _symrom_gpio_init();	
 }
 

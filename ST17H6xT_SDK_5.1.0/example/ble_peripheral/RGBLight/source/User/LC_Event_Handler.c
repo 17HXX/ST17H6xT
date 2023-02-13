@@ -20,32 +20,7 @@
 /*------------------------------------------------------------------*/
 /* 					 	local variables			 					*/
 /*------------------------------------------------------------------*/
-const uint8_t pin_map[GPIO_NUM] = 
-{
-	0,    //p0
-	1,    //p1
-	2,    //p2
-	3,    //p3
-	7,    //p7
-	9,    //p9
-	10,   //p10
-	11,   //p11
-	14,   //p14
-	15,   //p15
-	16,   //p16
-	17,   //p17
-	18,   //p18
-	20,   //p20
-	23,   //p23
-	24,   //p24
-	25,   //p25
-	26,   //p26
-	27,   //p27
-	31,   //p31
-	32,   //p32
-	33,   //p33
-	34,   //p34
-};
+
 /*------------------------------------------------------------------*/
 /* 					 	public variables		 					*/
 /*------------------------------------------------------------------*/
@@ -112,16 +87,6 @@ void	__attribute__((used))	LC_IR_Analysis_Data(uint32	nTimeL)
  */
 void	__attribute__((used))	LC_Key_Pin_IntHandler_Neg(GPIO_Pin_e pin, IO_Wakeup_Pol_e type)
 {
-	uint8_t pin_idx = pin_map[pin];
-	uint32_t triggered = s_gpio_wakeup_src[pin_idx/32] & BIT(pin_idx%32);
-
-	if(triggered)
-	{
-		LOG("wakeup0 %d\n", triggered);
-		// gpioin_unregister(GPIO_KEY_NO1);
-		// osal_start_timerEx(LC_Key_TaskID, KEY_SCANF_EVT, 20);
-	}
-	else
 	{
 		LOG("Int0 %d\n", triggered);
 	}
@@ -130,54 +95,10 @@ void	__attribute__((used))	LC_Key_Pin_IntHandler_Neg(GPIO_Pin_e pin, IO_Wakeup_P
 
 void	__attribute__((used))	LC_Key_Pin_IntHandler_Pos(GPIO_Pin_e pin, IO_Wakeup_Pol_e type)
 {
-	uint8_t pin_idx = pin_map[pin];
-	uint32_t triggered = s_gpio_wakeup_src[pin_idx/32] & BIT(pin_idx%32);
-	if(triggered)
-	{
-		LOG("wakeup1 %d\n", triggered);
-	}
-	else
 	{
 		LOG("Int1 %d\n", triggered);
-		// gpioin_unregister(GPIO_KEY_NO1);
-		// osal_start_timerEx(LC_Key_TaskID, KEY_SCANF_EVT, 20);
 	}
 
-}
-
-void	__attribute__((used))	pin_event_Neg_handler(GPIO_Pin_e pin, gpio_polarity_e type)
-{
-	uint8_t pin_idx = pin_map[pin];
-	uint32_t triggered = s_gpio_wakeup_src[pin_idx/32] & BIT(pin_idx%32);
-    switch (pin)
-    {
-		#if (LC_RGBLight_Key_Enable == 1)
-		case GPIO_KEY_NO1:
-			LOG("KEY interrupt neg %d, src %d\n", type, triggered);
-			break;
-		#endif
-		
-		default:
-
-			break;
-    }
-}
-void	__attribute__((used))	pin_event_Pos_handler(GPIO_Pin_e pin, gpio_polarity_e type)
-{
-	uint8_t pin_idx = pin_map[pin];
-	uint32_t triggered = s_gpio_wakeup_src[pin_idx/32] & BIT(pin_idx%32);
-    switch (pin)
-    {
-		#if (LC_RGBLight_Key_Enable == 1)
-		case GPIO_KEY_NO1:
-				LOG("KEY interrupt pos %d, src %d\n", type, triggered);
-			break;
-		#endif
-
-		default:
-
-			break;
-    }
 }
 /*!
  *	@fn			LC_Gpio_IR_IntHandler

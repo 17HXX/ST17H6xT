@@ -145,47 +145,12 @@ void usr0_wakeup_handler(void)
 }
 
 volatile unsigned int int_flag = 0;
-uint8_t pin_map[GPIO_NUM] = 
-{
-	0,    //p0
-	1,    //p1
-	2,    //p2
-	3,    //p3
-	7,    //p7
-	9,    //p9
-	10,   //p10
-	11,   //p11
-	14,   //p14
-	15,   //p15
-	16,   //p16
-	17,   //p17
-	18,   //p18
-	20,   //p20
-	23,   //p23
-	24,   //p24
-	25,   //p25
-	26,   //p26
-	27,   //p27
-	31,   //p31
-	32,   //p32
-	33,   //p33
-	34,   //p34
-};
 
 extern uint32_t s_gpio_wakeup_src[2];
 void pos_cb(gpio_pin_e pin,gpio_polarity_e type)
 {
-	uint8_t pin_idx = pin_map[pin];
-	uint32_t triggered = s_gpio_wakeup_src[pin_idx/32] & BIT(pin_idx%32);
-	
-	LOG("pin:%d (pos) 0x%x 0x%x ",pin,s_gpio_wakeup_src[0],s_gpio_wakeup_src[1]);
 	int_flag++;
 
-	if(triggered)
-	{
-		LOG("wakeup:%d\n",int_flag);
-	}
-	else
 	{
 		LOG("int:%d\n",int_flag);
 	}
@@ -193,17 +158,8 @@ void pos_cb(gpio_pin_e pin,gpio_polarity_e type)
 
 void neg_cb(gpio_pin_e pin,gpio_polarity_e type)
 {
-	uint8_t pin_idx = pin_map[pin];
-	uint32_t triggered = s_gpio_wakeup_src[pin_idx/32] & BIT(pin_idx%32);
-
-	LOG("pin:%d (neg) 0x%x 0x%x ",pin,s_gpio_wakeup_src[0],s_gpio_wakeup_src[1]);
 	int_flag++;
 
-	if(triggered)
-	{
-		LOG("wakeup:%d\n",int_flag);
-	}
-	else
 	{
 		LOG("int:%d\n",int_flag);
 	}

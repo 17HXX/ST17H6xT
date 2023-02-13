@@ -82,7 +82,7 @@ static	int	Key_Pin_Config(void)
 	uint8	ret;
 	gpio_dir(GPIO_KEY_NO1, IE);						//set gpio input
     gpio_pull_set(GPIO_KEY_NO1, STRONG_PULL_UP);	//pull up 10k
-	ret	=	gpioin_register(GPIO_KEY_NO1, LC_Key_Pin_IntHandler_Neg, LC_Key_Pin_IntHandler_Pos);
+	ret	=	gpioin_register(GPIO_KEY_NO1, LC_Key_Pin_IntHandler_Pos, LC_Key_Pin_IntHandler_Neg);
 	LOG("key init ret = %02x\n",ret);
 
 	return	ret;
@@ -241,7 +241,7 @@ uint16 LC_Key_ProcessEvent(uint8 task_id, uint16 events)
     if (events & KEY_STOPSCANF_EVT)
     {
         LOG("stop scanf \n");
-        gpioin_register(GPIO_KEY_NO1, LC_Key_Pin_IntHandler_Neg, LC_Key_Pin_IntHandler_Pos);
+        gpioin_register(GPIO_KEY_NO1, LC_Key_Pin_IntHandler_Pos, LC_Key_Pin_IntHandler_Neg);
         osal_stop_timerEx(LC_Key_TaskID, KEY_SCANF_EVT);
         return (events ^ KEY_STOPSCANF_EVT);
     }

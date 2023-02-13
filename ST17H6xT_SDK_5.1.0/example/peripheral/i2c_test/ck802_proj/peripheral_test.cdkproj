@@ -66,6 +66,7 @@ BareMetal: Without RTOS</Description>
     <File Name="../../../../components/driver/source/i2c.c">
       <FileOption/>
     </File>
+    <File Name="../../../../components/driver/source/gpio.c"/>
   </VirtualDirectory>
   <VirtualDirectory Name="main">
     <File Name="../source/main.c">
@@ -83,7 +84,9 @@ BareMetal: Without RTOS</Description>
     <File Name="../source/i2c_test.c">
       <FileOption/>
     </File>
-    <File Name="../source/lcd_allvision.c"/>
+    <File Name="../source/lcd_allvision.c">
+      <FileOption/>
+    </File>
   </VirtualDirectory>
   <DebugSessions>
     <watchExpressions>g_maxConnNum:1;g_pConnectionBuffer:1;pConnContext:1;(uint8 *)&amp;(connPtr-&gt;ll_buf.tx_ntrm_pkts[i]-&gt;header):1;pkt0:1;pkt1:1</watchExpressions>
@@ -289,4 +292,13 @@ BareMetal: Without RTOS</Description>
       </Flash>
     </BuildConfig>
   </BuildConfigs>
+  <VendorInfo>
+    <VendorName>NULL</VendorName>
+  </VendorInfo>
+  <ToolsConfig>
+    <Compiler>
+      <Name>CKV2ElfMinilib</Name>
+      <Version>latest</Version>
+    </Compiler>
+  </ToolsConfig>
 </Project>

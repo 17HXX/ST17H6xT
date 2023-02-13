@@ -66,7 +66,10 @@ BareMetal: Without RTOS</Description>
     <File Name="../../../../components/driver/source/adc.c">
       <FileOption/>
     </File>
-    <File Name="../../../../components/driver/source/flash.c"/>
+    <File Name="../../../../components/driver/source/flash.c">
+      <FileOption/>
+    </File>
+    <File Name="../../../../components/driver/source/gpio.c"/>
   </VirtualDirectory>
   <VirtualDirectory Name="main">
     <File Name="../source/main.c">
@@ -289,4 +292,10 @@ BareMetal: Without RTOS</Description>
   <VendorInfo>
     <VendorName>NULL</VendorName>
   </VendorInfo>
+  <ToolsConfig>
+    <Compiler>
+      <Name>CKV2ElfMinilib</Name>
+      <Version>latest</Version>
+    </Compiler>
+  </ToolsConfig>
 </Project>

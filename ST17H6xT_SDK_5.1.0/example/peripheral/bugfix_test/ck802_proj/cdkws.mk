@@ -6,7 +6,7 @@ Project_Title:
 	@echo "----------Building project:[ bugfix - BuildSet ]----------"
 
 Project_Build:
-	@make -r -f bugfix.mk -j 12 -C  ./ 
+	@make -r -f bugfix.mk -j 16 -C  ./ 
 
 
 clean:

@@ -197,6 +197,7 @@ void GPIO_IRQHandler_r(void);
  * 
  * */
 int gpio_init(void);
+int rom_gpio_init(void);
 int gpio_dir(gpio_pin_e pin, gpio_dir_t dir);
 void gpio_write(gpio_pin_e pin, bit_action_e en);
 void gpio_fast_write(gpio_pin_e pin, uint8_t en);

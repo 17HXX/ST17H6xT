@@ -63,6 +63,7 @@ BareMetal: Without RTOS</Description>
     <File Name="../../../../components/driver/source/watchdog.c">
       <FileOption/>
     </File>
+    <File Name="../../../../components/driver/source/gpio.c"/>
   </VirtualDirectory>
   <VirtualDirectory Name="smart_rf">
     <File Name="../source/main.c">
@@ -71,7 +72,9 @@ BareMetal: Without RTOS</Description>
     <File Name="../source/OSAL_PhyRf.c">
       <FileOption/>
     </File>
-    <File Name="../source/phy_Rf.c"/>
+    <File Name="../source/phy_Rf.c">
+      <FileOption/>
+    </File>
   </VirtualDirectory>
   <DebugSessions>
     <watchExpressions>g_maxConnNum:1;g_pConnectionBuffer:1;pConnContext:1;(uint8 *)&amp;(connPtr-&gt;ll_buf.tx_ntrm_pkts[i]-&gt;header):1;pkt0:1;pkt1:1;tasksArr:1;tasksEvents:1</watchExpressions>
@@ -279,4 +282,10 @@ BareMetal: Without RTOS</Description>
   <VendorInfo>
     <VendorName>NULL</VendorName>
   </VendorInfo>
+  <ToolsConfig>
+    <Compiler>
+      <Name>CKV2ElfMinilib</Name>
+      <Version>latest</Version>
+    </Compiler>
+  </ToolsConfig>
 </Project>

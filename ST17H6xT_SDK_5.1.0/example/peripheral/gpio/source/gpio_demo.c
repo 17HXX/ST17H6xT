@@ -52,47 +52,12 @@
 uint8 application_TaskID; 
 
 volatile unsigned int int_flag = 0;
-const uint8_t pin_map[GPIO_NUM] = 
-{
-	0,    //p0
-	1,    //p1
-	2,    //p2
-	3,    //p3
-	7,    //p7
-	9,    //p9
-	10,   //p10
-	11,   //p11
-	14,   //p14
-	15,   //p15
-	16,   //p16
-	17,   //p17
-	18,   //p18
-	20,   //p20
-	23,   //p23
-	24,   //p24
-	25,   //p25
-	26,   //p26
-	27,   //p27
-	31,   //p31
-	32,   //p32
-	33,   //p33
-	34,   //p34
-};
 
 extern uint32_t s_gpio_wakeup_src[2];
 void pos_cb(gpio_pin_e pin,gpio_polarity_e type)
 {
-	uint8_t pin_idx = pin_map[pin];
-	uint32_t triggered = s_gpio_wakeup_src[pin_idx/32] & BIT(pin_idx%32);
-	
-	LOG("pin:%d (pos) 0x%x 0x%x ",pin,s_gpio_wakeup_src[0],s_gpio_wakeup_src[1]);
 	int_flag++;
 
-	if(triggered)
-	{
-		LOG("wakeup:%d\n",int_flag);
-	}
-	else
 	{
 		LOG("int:%d\n",int_flag);
 	}
@@ -100,17 +65,8 @@ void pos_cb(gpio_pin_e pin,gpio_polarity_e type)
 
 void neg_cb(gpio_pin_e pin,gpio_polarity_e type)
 {
-	uint8_t pin_idx = pin_map[pin];
-	uint32_t triggered = s_gpio_wakeup_src[pin_idx/32] & BIT(pin_idx%32);
-
-	LOG("pin:%d (neg) 0x%x 0x%x ",pin,s_gpio_wakeup_src[0],s_gpio_wakeup_src[1]);
 	int_flag++;
 
-	if(triggered)
-	{
-		LOG("wakeup:%d\n",int_flag);
-	}
-	else
 	{
 		LOG("int:%d\n",int_flag);
 	}
@@ -120,9 +76,9 @@ gpioin_t pin_test[2];
 void gpio_Init( uint8 task_id )
 {
 	volatile int ret;
-	gpio_pin_e pin_i = P14;
+	gpio_pin_e pin_i = P16;
 	gpio_pin_e pin_o = P15;
-	gpio_pupd_e type = GPIO_PULL_DOWN;
+	gpio_pupd_e type = GPIO_PULL_UP_S;
 	
 	application_TaskID = task_id;
 	LOG("GPIO_demo\n");
@@ -132,7 +88,7 @@ void gpio_Init( uint8 task_id )
 	{
 		LOG("gpio init error:%d\n",ret);
 	}
-	
+	gpio_dir(pin_i, IE);
 	gpio_pull_set(pin_i,type);
 	ret = gpioin_register(pin_i,pos_cb,neg_cb);
 	

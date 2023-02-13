@@ -6,7 +6,7 @@ Project_Title:
 	@echo "----------Building project:[ sbp - BuildSet ]----------"
 
 Project_Build:
-	@make -r -f sbp.mk -j 12 -C  ./ 
+	@make -r -f sbp.mk -j 16 -C  ./ 
 
 
 clean:

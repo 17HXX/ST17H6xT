@@ -99,7 +99,7 @@
 #define gpio_fast_write _symrom_gpio_fast_write
 #define gpio_fmux_control _symrom_gpio_fmux_control
 #define gpio_fmux_set _symrom_gpio_fmux_set
-#define gpio_init _symrom_gpio_init
+#define rom_gpio_init _symrom_gpio_init
 #define GPIO_IRQHandler _symrom_GPIO_IRQHandler
 #define gpio_pin2pin3_control _symrom_gpio_pin2pin3_control
 #define gpio_pull_set _symrom_gpio_pull_set
@@ -337,9 +337,20 @@
 
 #define	otp_read_data_byte		_symrom_otp_read_data_byte
 
-#define pwrmgr_lock        _symrom_pwrmgr_lock
-#define pwrmgr_unlock      _symrom_pwrmgr_unlock
-#define enter_sleep_off_mode _symrom_enter_sleep_off_mode
+#define pwrmgr_unregister			_symrom_pwrmgr_unregister
+#define pwrmgr_lock					_symrom_pwrmgr_lock
+#define pwrmgr_unlock				_symrom_pwrmgr_unlock
+#define enter_sleep_off_mode		_symrom_enter_sleep_off_mode
+
+#define m_gpioCtx					_symrom_m_gpioCtx
+#define gpio_interrupt_disable		_symrom_gpio_interrupt_disable
+#define gpio_interrupt_enable		_symrom_gpio_interrupt_enable
+#define gpio_sleep_handler			_symrom_gpio_sleep_handler
+#define gpioin_event_pin			_symrom_gpioin_event_pin
+#define gpio_retention_active		_symrom_gpio_retention_active
+#define s_gpio_pinmap				_symrom_s_gpio_pinmap
+
+#define	gpio_wakeup_control			_symrom_gpio_wakeup_control
 
 #endif
 #endif
